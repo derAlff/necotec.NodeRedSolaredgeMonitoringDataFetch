@@ -1,0 +1,260 @@
+[
+    {
+        "id": "a144e85c.b5701",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "35383c08.73311c",
+        "type": "comment",
+        "z": "a144e85c.b5701",
+        "name": "insgesamt 11 wechselrichter",
+        "info": "",
+        "x": 140,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "21f67745.436ad8",
+        "type": "inject",
+        "z": "a144e85c.b5701",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 140,
+        "y": 120,
+        "wires": [
+            [
+                "cec8e2a0.e7e3d"
+            ]
+        ]
+    },
+    {
+        "id": "cec8e2a0.e7e3d",
+        "type": "ioBroker get",
+        "z": "a144e85c.b5701",
+        "name": "GET SLE LOCATION_ID",
+        "topic": "solaredge.0.LOCATION_ID",
+        "attrname": "payload",
+        "payloadType": "value",
+        "x": 370,
+        "y": 120,
+        "wires": [
+            [
+                "4231771c.cdce6",
+                "1cb762b1.49ed35"
+            ]
+        ]
+    },
+    {
+        "id": "1cb762b1.49ed35",
+        "type": "ioBroker get",
+        "z": "a144e85c.b5701",
+        "name": "GET SLE API_KEY",
+        "topic": "solaredge.0.API_Key",
+        "attrname": "payload",
+        "payloadType": "value",
+        "x": 350,
+        "y": 180,
+        "wires": [
+            [
+                "e16aa492.af3f18",
+                "14f807ba.2dd1b8"
+            ]
+        ]
+    },
+    {
+        "id": "14f807ba.2dd1b8",
+        "type": "ioBroker get",
+        "z": "a144e85c.b5701",
+        "name": "GET SLE COUNT OF INVERTERS",
+        "topic": "solaredge.0.INVERTER_COUNT",
+        "attrname": "payload",
+        "payloadType": "value",
+        "x": 400,
+        "y": 240,
+        "wires": [
+            [
+                "3b2854b0.ea8c04",
+                "5bcb8bd7.0efeec"
+            ]
+        ]
+    },
+    {
+        "id": "4231771c.cdce6",
+        "type": "function",
+        "z": "a144e85c.b5701",
+        "name": "Set ID",
+        "func": "var input = msg.payload;\nflow.set('ID', input);\nmsg.payload = input;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 630,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e16aa492.af3f18",
+        "type": "function",
+        "z": "a144e85c.b5701",
+        "name": "Set API_KEY",
+        "func": "var input = msg.payload;\nflow.set('API_KEY', input);\nmsg.payload = input;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 650,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3b2854b0.ea8c04",
+        "type": "function",
+        "z": "a144e85c.b5701",
+        "name": "Set COUNT of devices",
+        "func": "var input = msg.payload;\nflow.set('COUNT', input);\nmsg.payload = input;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 680,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6842910.a7941f",
+        "type": "inject",
+        "z": "a144e85c.b5701",
+        "name": "TEST FLOW.SET",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 490,
+        "y": 40,
+        "wires": [
+            [
+                "6348d2da.b2e7ac"
+            ]
+        ]
+    },
+    {
+        "id": "6348d2da.b2e7ac",
+        "type": "function",
+        "z": "a144e85c.b5701",
+        "name": "",
+        "func": "var input = msg.payload;\nvar ID = flow.get('ID');\nvar API_KEY = flow.get('API_KEY');\nvar COUNT = flow.get('COUNT');\n\nmsg.payload = ID.toString() + \" \" + API_KEY.toString() + \" \" + COUNT.toString();\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 690,
+        "y": 40,
+        "wires": [
+            [
+                "3c84027f.0a395e"
+            ]
+        ]
+    },
+    {
+        "id": "3c84027f.0a395e",
+        "type": "debug",
+        "z": "a144e85c.b5701",
+        "name": "DEBUG TEST",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 880,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "2dc9371c.d4115",
+        "type": "comment",
+        "z": "a144e85c.b5701",
+        "name": "load inventory of plant",
+        "info": "",
+        "x": 120,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "5bcb8bd7.0efeec",
+        "type": "function",
+        "z": "a144e85c.b5701",
+        "name": "Set URL for fetch inventory",
+        "func": "var ID = flow.get('ID');\nvar API_KEY = flow.get('API_KEY');\nvar COUNT = flow.get('COUNT');\nvar url = \"https://monitoringapi.solaredge.com/site/\" + ID.toString() + \"/inventory?api_key=\" + API_KEY.toString();\n\nmsg.url = url;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 380,
+        "y": 300,
+        "wires": [
+            [
+                "a63abee3.2949d",
+                "f3e86628.df4bf"
+            ]
+        ]
+    },
+    {
+        "id": "a63abee3.2949d",
+        "type": "debug",
+        "z": "a144e85c.b5701",
+        "name": "DEBUG INVENTORY",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "url",
+        "targetType": "msg",
+        "x": 680,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "f3e86628.df4bf",
+        "type": "http request",
+        "z": "a144e85c.b5701",
+        "name": "Get inventory data",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": false,
+        "url": "",
+        "tls": "",
+        "proxy": "",
+        "authType": "basic",
+        "x": 670,
+        "y": 340,
+        "wires": [
+            [
+                "24295372.9f601c"
+            ]
+        ]
+    },
+    {
+        "id": "24295372.9f601c",
+        "type": "debug",
+        "z": "a144e85c.b5701",
+        "name": "DEBUG URL",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 930,
+        "y": 300,
+        "wires": []
+    }
+]
